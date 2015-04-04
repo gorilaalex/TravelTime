@@ -68,6 +68,9 @@ public class TimelineActivity extends Activity {
             {
                 Toast.makeText(getApplicationContext(),"On item " + position + " clicked",Toast.LENGTH_SHORT).show();
                 tripName = l.get(position).getTitle();
+                Intent intent = new Intent(getBaseContext(),GalleryActivity.class);
+                intent.putExtra("TripName", tripName);
+                startActivity(intent);
             }
 
             @Override
