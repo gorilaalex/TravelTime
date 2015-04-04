@@ -7,7 +7,7 @@
     <color name="articlecolor">#3399FF</color>
     <color name="article_title">#3399FF</color>
 
-    <color name="color1">#04bfbf</color>
+    <color name="color1">#039c9c</color>
     <color name="color2">#CAFCD8</color>
     <color name="color3">#F7E967</color>
     <color name="color4">#A9CF54</color>
@@ -18,6 +18,6 @@
     <color name="accent">#F7E967</color>
 
 
-    <color name="mybackground">#04bfbf</color>
+    <color name="mybackground">#CAFCD8</color>
 
 </resources>
