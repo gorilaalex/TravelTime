@@ -32,7 +32,8 @@ public class TimelineActivity extends Activity {
     private String tripName="";
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;List<Trip> l=null;
+    private RecyclerView.LayoutManager mLayoutManager;
+    List<Trip> l=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -66,6 +67,7 @@ public class TimelineActivity extends Activity {
             public void onItemClick(View view, int position)
             {
                 Toast.makeText(getApplicationContext(),"On item " + position + " clicked",Toast.LENGTH_SHORT).show();
+                tripName = l.get(position).getTitle();
             }
 
             @Override
@@ -93,6 +95,8 @@ public class TimelineActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, GalleryActivity.class);
+
+            intent.putExtra("TripName", ti);
             startActivity(intent);
             return true;
         }

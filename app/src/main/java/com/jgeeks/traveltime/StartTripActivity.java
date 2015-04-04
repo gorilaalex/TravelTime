@@ -32,11 +32,12 @@ public class StartTripActivity extends Activity {
     public void addTrip(View view){
         TripReaderHelper db = new TripReaderHelper(this);
         Trip trip = new Trip();
+
         if(mEditTitle.getText().toString()!=null) {
             trip.setTitle(mEditTitle.getText().toString());
             trip.setPath(mEditLocation.getText().toString());
-
-            Intent intent = new Intent(this, StartTripActivity.class);
+            db.addTrip(trip);
+            Intent intent = new Intent(this, GalleryActivity.class);
             intent.putExtra("TripName", trip.getTitle());
             startActivity(intent);
         }
