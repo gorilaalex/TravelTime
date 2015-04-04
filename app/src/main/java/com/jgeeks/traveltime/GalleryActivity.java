@@ -24,6 +24,9 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jgeeks.traveltime.db.TripReaderHelper;
+import com.jgeeks.traveltime.model.Trip;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,6 +42,7 @@ public class GalleryActivity extends Activity {
     public static final int MEDIA_TYPE_VIDEO = 2;
     private Uri fileUri;
     private static String path = "TravelTime/";
+    private String title;
     final ImageAdapter adapter = new ImageAdapter(GalleryActivity.this);
 
     GridView grid;
@@ -56,6 +60,7 @@ public class GalleryActivity extends Activity {
         // Selected image id
         String name = i.getExtras().getString("TripName");
         path += name;
+        title = name;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
@@ -125,8 +130,9 @@ public class GalleryActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        TripReaderHelper tr = new TripReaderHelper(this);
         // Inflate the menu; this adds items to the action bar if it is present.
-        if(1==1)
+        if(tr.getTrip(title).getEndDate() != null)
             getMenuInflater().inflate(R.menu.menu_gallery, menu);
         else{
             getMenuInflater().inflate(R.menu.menu_gallery2, menu);
@@ -194,6 +200,14 @@ public class GalleryActivity extends Activity {
             intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
             // start the Video Capture Intent
             startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
+        }
+        else if (id == R.id.action_end_trip){
+            TripReaderHelper tr = new TripReaderHelper(this);
+            Trip newTrip = tr.getTrip(title);
+            newTrip.setEndDate(new Date());
+            tr.updateTrip(newTrip);
+            Intent intent = new Intent(this, TimelineActivity.class);
+            startActivity(intent);
         }
 
             return super.onOptionsItemSelected(item);
