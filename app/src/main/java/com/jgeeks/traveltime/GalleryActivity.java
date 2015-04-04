@@ -29,28 +29,23 @@ public class GalleryActivity extends Activity {
     private static String path = "TravelTime";
 
     GridView grid;
-    int[] imageId = {
-            R.drawable.sample_0,
-            R.drawable.sample_1,
-            R.drawable.sample_2,
-            R.drawable.sample_3,
-            R.drawable.sample_4,
-            R.drawable.sample_5,
-            R.drawable.sample_6,
-            R.drawable.sample_7,
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        ImageAdapter adapter = new ImageAdapter(GalleryActivity.this, imageId);
+        ImageAdapter adapter = new ImageAdapter(GalleryActivity.this);
         grid=(GridView)findViewById(R.id.grid);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
+            public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(GalleryActivity.this, "You Clicked at " + position, Toast.LENGTH_SHORT).show();
+
+                // Send intent to SingleViewActivity
+                Intent i =
+                        new Intent(getApplicationContext(), SingleViewActivity.class);
+                // Pass image index
+                i.putExtra("id", position);
+                startActivity(i);
             }
         });
     }
