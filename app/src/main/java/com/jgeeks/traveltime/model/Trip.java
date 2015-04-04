@@ -39,6 +39,10 @@ public class Trip {
         return this.title;
     }
 
+    public Date getEndDate() {return this.endDate;}
+
+    public Date getStartDate() { return this.startDate;}
+
     private Date convertDate(String stringDate){
         return new Date();
     }
