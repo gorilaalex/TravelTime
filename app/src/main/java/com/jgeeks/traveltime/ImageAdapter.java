@@ -14,7 +14,7 @@ import android.widget.TextView;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-    private final int[] Imageid;
+    public final int[] Imageid;
     public ImageAdapter(Context c,int[] Imageid ) {
         mContext = c;
         this.Imageid = Imageid;
