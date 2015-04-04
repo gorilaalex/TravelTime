@@ -1,6 +1,9 @@
 package com.jgeeks.traveltime;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jgeeks.traveltime.db.TripReaderHelper;
+import com.jgeeks.traveltime.model.Trip;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class TimelineActivity extends Activity {
@@ -17,7 +27,7 @@ public class TimelineActivity extends Activity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     String[] dataArray = new String[]{"India","Australia","USA","U.K","Japan","Russia","Germany","Pakistan","Bangladesh","Africa","Brazil","Rome","italy"};
-
+    List<Trip> l=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +42,9 @@ public class TimelineActivity extends Activity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
+        getTrips();
         // specify an adapter (see also next example)
-        mAdapter = new TimelineAdapter(dataArray);
+        mAdapter = new TimelineAdapter(l);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnItemTouchListener(new TimelineItemClickListener(this, mRecyclerView, new TimelineItemClickListener.OnItemClickListener()
@@ -75,8 +85,16 @@ public class TimelineActivity extends Activity {
         }
 
         if (id == R.id.action_trip) {
+
            // Intent intent = new Intent(this, StartTripActivity.class);
             //startActivity(intent);
+            if(l!=null){
+                //l.add(0,new Trip("vacanta test","pathul meu","nulllable","nullable"));
+               // mAdapter.insert(object, 0);
+                //mRecyclerView.addItemDecoration();
+                openDialog1();
+               // mAdapter.notifyDataSetChanged();
+            }
 
 
             return true;
@@ -85,9 +103,47 @@ public class TimelineActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void openDialog1() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.timeline_additem);
+        dialog.setTitle("Add a new trip");
+        
+
+        // set the custom dialog components - text, image and button
+        TextView text = (TextView) dialog.findViewById(R.id.txtName);
+        text.setText("Android custom dialog example!");
+        //ImageView image = (ImageView) dialog.findViewById(R.id.image);
+       // image.setImageResource(R.drawable.ic_launcher);
+
+       // Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        // if button is clicked, close the custom dialog
+       /* dialogButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });*/
+
+        dialog.show();
+    }
+
     @Override
     public void onBackPressed() {
         //do nothing
 
+    }
+
+    private void getTrips(){
+        List<Trip> trlst;
+
+        TripReaderHelper db = new TripReaderHelper(this);
+        trlst = db.getAllTrips();
+        if(l==null){
+            l = new LinkedList<>();
+        }
+        for(int i=trlst.size()-1;i>=0;i--) {
+            l.add(trlst.get(i));
+        }
     }
 }

@@ -7,14 +7,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jgeeks.traveltime.model.Trip;
+
+import java.util.List;
+
 /**
  * Created by alexgaluska on 04/04/15.
  */
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHolder> {
 
-    private String[] dataSource;
+    private List<Trip> dataSource;
 
-    public TimelineAdapter(String[] dataArgs){
+    public TimelineAdapter(List<Trip> dataArgs){
         dataSource = dataArgs;
 
     }
@@ -50,11 +54,14 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(TimelineAdapter.ViewHolder holder, int position) {
-        holder.mTextView.setText(dataSource[position]);
+        holder.mTextView.setText(dataSource.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        if(dataSource!=null) {
+            return dataSource.size();
+        }
+        else return 0;
     }
 }

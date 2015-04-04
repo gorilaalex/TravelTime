@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mybackground"
+    android:animateLayoutChanges="true"
+    android:id="@+id/timeline_layout"
     >
 
     <!-- A RecyclerView with some commonly used attributes -->
@@ -12,6 +14,7 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transcriptMode="normal"
         />
 
     </LinearLayout>

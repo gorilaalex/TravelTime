@@ -11,10 +11,13 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ImageView;
 
+import com.jgeeks.traveltime.db.TripReaderHelper;
+import com.jgeeks.traveltime.model.Trip;
+
+import java.util.List;
+
 
 public class SplashScreen extends Activity {
-    private final int SPLASH_DISPLAY_LENGTH = 50000;
-    private boolean ping = false;
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +35,18 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash_screen);
         imageView = (ImageView) findViewById(R.id.splashImage);
 
-        startAnotherActivity();
+        TripReaderHelper db = new TripReaderHelper(this);
+        //db.addTrip(new Trip("Vacanta1", "pathul meu", "", ""));
+        //db.addTrip(new Trip("Vacanta3", "path ", "", ""));
 
+        List<Trip> l = db.getAllTrips();
+
+        Trip t = db.getTrip("Vacanta3");
+          startAnotherActivity();
     }
 
-    private void getCount() throws InterruptedException {
-        Thread.sleep(5000);
-        ping = true;
+    private void initializeDb(){
+
     }
 
     private void startAnotherActivity(){
