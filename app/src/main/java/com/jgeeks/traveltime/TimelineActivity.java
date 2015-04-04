@@ -77,7 +77,7 @@ public class TimelineActivity extends Activity {
         if (id == R.id.action_trip) {
            // Intent intent = new Intent(this, StartTripActivity.class);
             //startActivity(intent);
-            
+
 
             return true;
         }

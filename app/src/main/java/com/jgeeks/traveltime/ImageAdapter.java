@@ -36,6 +36,7 @@ public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     public ImageAdapter(Context c) {
         mContext = c;
+        getSdcardImages();
     }
     @Override
     public int getCount() {

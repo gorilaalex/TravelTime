@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.jgeeks.traveltime.SplashScreen">
+    tools:context="com.jgeeks.traveltime.SplashScreen"
+    android:background="@drawable/background">
 
     <ImageView
-        android:background="@color/mybackground"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/splashImage"
-        android:src="@drawable/logo1"/>
+        android:src="@drawable/logo2"/>
 
 </RelativeLayout>
