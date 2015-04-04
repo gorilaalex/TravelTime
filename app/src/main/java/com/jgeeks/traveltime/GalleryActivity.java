@@ -61,6 +61,7 @@ public class GalleryActivity extends Activity {
         String name = i.getExtras().getString("TripName");
         path += name;
         title = name;
+        createFolder();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
@@ -142,6 +143,16 @@ public class GalleryActivity extends Activity {
     /** Create a file Uri for saving an image or video */
     private static Uri getOutputMediaFileUri(int type){
         return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    public void createFolder(){
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), path);
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                Log.d("MyCameraApp", "failed to create directory");
+            }
+        }
     }
 
     /** Create a File for saving an image or video */
