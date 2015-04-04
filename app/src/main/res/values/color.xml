@@ -14,10 +14,10 @@
     <color name="cachecolor">#8ad0e8</color>
 
 
-    <color name="primary">#e6b121</color>
+    <color name="primary">#0066cc</color>
 
-    <color name="primary_dark">#e6b121</color>
+    <color name="primary_dark">#000000</color>
 
-    <color name="accent">#e6b121</color>
+    <color name="accent">#ff5500</color>
 
 </resources>
