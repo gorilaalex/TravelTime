@@ -10,5 +10,6 @@
 
     <string name="title_activity_camera">CameraActivity</string>
     <string name="action_new_trip">Start trip</string>
+    <string name="title_activity_single_view">SingleViewActivity</string>
 
 </resources>
