@@ -27,24 +27,32 @@ public class GalleryActivity extends Activity {
     public static final int MEDIA_TYPE_VIDEO = 2;
     private Uri fileUri;
     private static String path = "TravelTime";
+    final ImageAdapter adapter = new ImageAdapter(GalleryActivity.this);
 
     GridView grid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        ImageAdapter adapter = new ImageAdapter(GalleryActivity.this);
         grid=(GridView)findViewById(R.id.grid);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
+                Intent i;
                 // Send intent to SingleViewActivity
-                Intent i =
-                        new Intent(getApplicationContext(), SingleViewActivity.class);
-                // Pass image index
-                i.putExtra("id", position);
+                if(adapter.f.get(position).contains("mp4")){
+                    String file = "file://" + adapter.f.get(position);
+                    Uri video = Uri.parse(file);
+                    i = new Intent(Intent.ACTION_VIEW, video);
+                    i.setDataAndType(video, "video/mp4");
+                }
+                else{
+                    i = new Intent(getApplicationContext(), SingleViewActivity.class);
+                    // Pass image index
+                    i.putExtra("id", position);
+                    i.putExtra("files",adapter.f);
+                }
                 startActivity(i);
             }
         });
@@ -126,5 +134,6 @@ public class GalleryActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        adapter.notifyDataSetChanged();
     }
 }
