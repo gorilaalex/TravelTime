@@ -3,11 +3,13 @@ package com.jgeeks.traveltime;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jgeeks.traveltime.db.TripReaderHelper;
 import com.jgeeks.traveltime.model.Trip;
@@ -24,17 +26,21 @@ public class StartTripActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_trip);
         mEditTitle = (EditText) findViewById(R.id.editTitle);
-        //mEditLocation = (EditText) findViewById(R.id.edit_location);
-    }
-
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        //newFragment.show(getSupportFragmentManager(), "datePicker");
+        mEditLocation = (EditText) findViewById(R.id.editLocation);
     }
 
     public void addTrip(View view){
         TripReaderHelper db = new TripReaderHelper(this);
-        //Tr = db.getAllTrips();
+        Trip trip = new Trip();
+        if(mEditTitle.getText().toString()!=null) {
+            trip.setTitle(mEditTitle.getText().toString());
+            trip.setPath(mEditLocation.getText().toString());
+
+            Intent intent = new Intent(this, StartTripActivity.class);
+            intent.putExtra("TripName", trip.getTitle());
+            startActivity(intent);
+        }
+        else Toast.makeText(this,"Title null",Toast.LENGTH_SHORT).show();
     }
 
     @Override

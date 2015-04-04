@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -124,6 +125,29 @@ public class TripReaderHelper extends SQLiteOpenHelper {
         }
 
         return list;
+
+    }
+
+    public void finishTrip(Date endDate){
+
+    }
+
+    public void updateTrip(Trip trip){
+        ContentValues values = new ContentValues();
+
+        values.put(TripEntry.COLUMN_NAME_TITLE, trip.getTitle());
+        values.put(TripEntry.COLUMN_NAME_PATH, trip.getPath());
+        values.put(TripEntry.COLUMN_NAME_START, trip.getStartDate().toString());
+        values.put(TripEntry.COLUMN_NAME_END, trip.getEndDate().toString());
+
+        String where = "id = ?";
+
+        String[] whereArgs = { Integer.valueOf(trip.getId()).toString() };
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        boolean updateSuccessful = db.update(TripEntry.TABLE_NAME, values, where, whereArgs) > 0;
+        db.close();
 
     }
 

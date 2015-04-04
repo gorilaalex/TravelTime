@@ -27,6 +27,13 @@ public class Trip {
     public void setPath(String p) {
         this.path = p;
     }
+    public void setEndDate(Date d){
+        this.endDate = d;
+    }
+
+    public void setStartDate(Date d){
+        this.startDate = d;
+    }
     public int getId(){
         return this.id;
     }

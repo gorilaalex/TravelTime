@@ -99,9 +99,9 @@ public class TimelineActivity extends Activity {
 
         if (id == R.id.action_trip) {
 
-            Intent intent = new Intent(this, GalleryActivity.class);
-            intent.putExtra("TripName",tripName);
+            Intent intent = new Intent(this, StartTripActivity.class);
             startActivity(intent);
+
             if(l!=null){
 
                 //l.add(0,new Trip("vacanta test","pathul meu","nulllable","nullable"));
