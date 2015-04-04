@@ -9,12 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.jgeeks.traveltime.db.TripReaderHelper;
+import com.jgeeks.traveltime.model.Trip;
+
 
 public class StartTripActivity extends Activity {
 
     private EditText mEditTitle;
     private EditText mEditLocation;
-
+    private Trip trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,11 @@ public class StartTripActivity extends Activity {
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         //newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void addTrip(View view){
+        TripReaderHelper db = new TripReaderHelper(this);
+        //Tr = db.getAllTrips();
     }
 
     @Override
