@@ -123,7 +123,15 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         if(f.size() != 0) {
-            setPic(imageView,f.get(position));
+            try {
+                setPic(imageView, f.get(position));
+            }
+            catch (IndexOutOfBoundsException e){
+                e.printStackTrace();
+                Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+                Bitmap bmp = Bitmap.createBitmap(1, 1, conf); // this creates a MUTABLE bitmap
+                imageView.setImageBitmap(bmp);
+            }
             //Bitmap myBitmap = BitmapFactory.decodeFile(f.get(position));
             //imageView.setImageBitmap(myBitmap);
         }

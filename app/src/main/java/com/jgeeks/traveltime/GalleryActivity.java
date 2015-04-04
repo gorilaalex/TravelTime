@@ -1,6 +1,9 @@
 package com.jgeeks.traveltime;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -36,6 +41,8 @@ public class GalleryActivity extends Activity {
         setContentView(R.layout.activity_gallery);
         grid=(GridView)findViewById(R.id.grid);
         grid.setAdapter(adapter);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
@@ -56,7 +63,44 @@ public class GalleryActivity extends Activity {
                 startActivity(i);
             }
         });
+        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final int pos = position;
+                builder.setTitle("Confirm delete");
+                builder.setMessage("Are you sure you want to delete it?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        File file = new File(adapter.f.get(pos));
+                        boolean deleted = file.delete();
+                        adapter.f.remove(pos);
+                        adapter.notifyDataSetChanged();
+                        adapter.getSdcardImages();
+                        dialog.dismiss();
+                    }
+
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+            }
+        });
+
+
     }
+
+
 
 
     @Override
@@ -134,6 +178,6 @@ public class GalleryActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
     }
 }

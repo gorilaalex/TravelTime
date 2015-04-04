@@ -36,8 +36,8 @@ public class SplashScreen extends Activity {
         imageView = (ImageView) findViewById(R.id.splashImage);
 
         TripReaderHelper db = new TripReaderHelper(this);
-        //db.addTrip(new Trip("Vacanta1", "pathul meu", "", ""));
-        //db.addTrip(new Trip("Vacanta3", "path ", "", ""));
+//        db.addTrip(new Trip("Vacanta1", "pathul meu", "", ""));
+  //      db.addTrip(new Trip("Vacanta3", "path ", "", ""));
 
         //List<Trip> l = db.getAllTrips();
 
