@@ -15,14 +15,15 @@ public class SplashScreen extends Activity {
     ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_splash_screen);
         imageView = (ImageView) findViewById(R.id.splashImage);
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.hide();
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(false);
         }
 
         try {

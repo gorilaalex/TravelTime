@@ -36,6 +36,10 @@
             android:name=".SingleViewActivity"
             android:label="@string/title_activity_single_view" >
         </activity>
+        <activity
+            android:name=".StartTripActivity"
+            android:label="@string/title_activity_start_trip" >
+        </activity>
     </application>
 
 </manifest>
