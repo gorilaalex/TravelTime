@@ -39,7 +39,7 @@ public class SplashScreen extends Activity {
 //        db.addTrip(new Trip("Vacanta1", "pathul meu", "", ""));
   //      db.addTrip(new Trip("Vacanta3", "path ", "", ""));
 
-        List<Trip> l = db.getAllTrips();
+        //List<Trip> l = db.getAllTrips();
 
         //Trip t = db.getTrip("Vacanta3");
           startAnotherActivity();
@@ -53,6 +53,7 @@ public class SplashScreen extends Activity {
         Intent intent = new Intent(this,TimelineActivity.class);
 
         startActivity(intent);
+        finish();
 
     }
 

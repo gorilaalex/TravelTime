@@ -20,8 +20,8 @@ public class StartTripActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_trip);
-        mEditTitle = (EditText) findViewById(R.id.edit_title);
-        mEditLocation = (EditText) findViewById(R.id.edit_location);
+        mEditTitle = (EditText) findViewById(R.id.editTitle);
+        //mEditLocation = (EditText) findViewById(R.id.edit_location);
     }
 
     public void showDatePickerDialog(View v) {

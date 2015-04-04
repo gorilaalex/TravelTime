@@ -1,16 +1,22 @@
 package com.jgeeks.traveltime;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,15 +29,22 @@ import java.util.List;
 
 public class TimelineActivity extends Activity {
 
+    private String tripName="";
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    String[] dataArray = new String[]{"India","Australia","USA","U.K","Japan","Russia","Germany","Pakistan","Bangladesh","Africa","Brazil","Rome","italy"};
-    List<Trip> l=null;
+    private RecyclerView.LayoutManager mLayoutManager;List<Trip> l=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        ActionBar bar = getActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#04BFBF")));
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(this.getResources().getColor(R.color.color1));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -86,14 +99,15 @@ public class TimelineActivity extends Activity {
 
         if (id == R.id.action_trip) {
 
-           // Intent intent = new Intent(this, StartTripActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, GalleryActivity.class);
+            intent.putExtra("TripName",tripName);
+            startActivity(intent);
             if(l!=null){
+
                 //l.add(0,new Trip("vacanta test","pathul meu","nulllable","nullable"));
-               // mAdapter.insert(object, 0);
                 //mRecyclerView.addItemDecoration();
-                openDialog1();
-               // mAdapter.notifyDataSetChanged();
+                //openDialog1();
+                //mAdapter.notifyDataSetChanged();
             }
 
 
@@ -108,7 +122,7 @@ public class TimelineActivity extends Activity {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.timeline_additem);
         dialog.setTitle("Add a new trip");
-        
+
 
         // set the custom dialog components - text, image and button
         TextView text = (TextView) dialog.findViewById(R.id.txtName);
