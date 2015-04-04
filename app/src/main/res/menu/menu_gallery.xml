@@ -1,6 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jgeeks.traveltime.GalleryActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/action_camera"
+        android:icon="@drawable/camera"
+        android:showAsAction="always"  android:title="Photo"/>
+    <item android:id="@+id/action_video"
+        android:icon="@drawable/video"
+        android:showAsAction="always"  android:title="Video"/>
 </menu>

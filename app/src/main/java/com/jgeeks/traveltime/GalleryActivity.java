@@ -2,7 +2,11 @@ package com.jgeeks.traveltime;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,22 +14,43 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class GalleryActivity extends Activity {
 
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+    private Uri fileUri;
+    private static String path = "TravelTime";
+
+    GridView grid;
+    int[] imageId = {
+            R.drawable.sample_0,
+            R.drawable.sample_1,
+            R.drawable.sample_2,
+            R.drawable.sample_3,
+            R.drawable.sample_4,
+            R.drawable.sample_5,
+            R.drawable.sample_6,
+            R.drawable.sample_7,
+    };
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
+        ImageAdapter adapter = new ImageAdapter(GalleryActivity.this, imageId);
+        grid=(GridView)findViewById(R.id.grid);
+        grid.setAdapter(adapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(GalleryActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(GalleryActivity.this, "You Clicked at " + position, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -37,6 +62,44 @@ public class GalleryActivity extends Activity {
         getMenuInflater().inflate(R.menu.menu_gallery, menu);
         return true;
     }
+    /** Create a file Uri for saving an image or video */
+    private static Uri getOutputMediaFileUri(int type){
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    /** Create a File for saving an image or video */
+    private static File getOutputMediaFile(int type){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), path);
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE){
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "IMG_"+ timeStamp + ".jpg");
+        } else if(type == MEDIA_TYPE_VIDEO) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "VID_"+ timeStamp + ".mp4");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -46,14 +109,27 @@ public class GalleryActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this,GalleryActivity.class);
-            startActivity(intent);
+        if (id == R.id.action_camera) {
+            // create Intent to take a picture and return control to the calling application
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             return true;
+        } else if (id == R.id.action_video){
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);  // create a file to save the video
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image file name
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
+            // start the Video Capture Intent
+            startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
         }
 
-        return super.onOptionsItemSelected(item);
+            return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
