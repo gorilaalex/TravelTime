@@ -24,6 +24,7 @@ public class SplashScreen extends Activity {
         try {
             Thread.sleep(5000);
             Intent intent = new Intent(this,TimelineActivity.class);
+            startActivity(intent);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
