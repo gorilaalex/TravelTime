@@ -74,6 +74,14 @@ public class TimelineActivity extends Activity {
             return true;
         }
 
+        if (id == R.id.action_trip) {
+           // Intent intent = new Intent(this, StartTripActivity.class);
+            //startActivity(intent);
+            
+
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
