@@ -2,4 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".TimelineActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="always" />
+    <item android:id="@+id/action_trip" android:title="@string/action_new_trip"
+        android:orderInCategory="100" android:showAsAction="always" />
 </menu>
