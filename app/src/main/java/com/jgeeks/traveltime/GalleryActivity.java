@@ -126,17 +126,15 @@ public class GalleryActivity extends Activity {
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         TripReaderHelper tr = new TripReaderHelper(this);
         // Inflate the menu; this adds items to the action bar if it is present.
-        if(tr.getTrip(title).getEndDate() != null)
+/*        if(tr.checkTrip(title) != false)
             getMenuInflater().inflate(R.menu.menu_gallery, menu);
-        else{
+        else{*/
             getMenuInflater().inflate(R.menu.menu_gallery2, menu);
-        }
+       // }
         return true;
     }
     /** Create a file Uri for saving an image or video */

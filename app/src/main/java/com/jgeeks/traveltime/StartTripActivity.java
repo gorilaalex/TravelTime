@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,9 +37,18 @@ public class StartTripActivity extends Activity {
         if(mEditTitle.getText().toString()!=null) {
             trip.setTitle(mEditTitle.getText().toString());
             trip.setPath(mEditLocation.getText().toString());
-            db.addTrip(trip);
+            try {
+                db.addTrip(trip);
+            }
+            catch(CursorIndexOutOfBoundsException e){
+
+            }
             Intent intent = new Intent(this, GalleryActivity.class);
-            intent.putExtra("TripName", trip.getTitle());
+            if(trip!=null) {
+                intent.putExtra("TripName", trip.getTitle());
+            }
+            else intent.putExtra("TripName", "string");
+
             startActivity(intent);
         }
         else Toast.makeText(this,"Title null",Toast.LENGTH_SHORT).show();

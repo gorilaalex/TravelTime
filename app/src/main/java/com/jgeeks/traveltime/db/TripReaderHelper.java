@@ -128,7 +128,32 @@ public class TripReaderHelper extends SQLiteOpenHelper {
 
     }
 
-    public void finishTrip(Date endDate){
+    public boolean checkTrip(String title){
+        ContentValues values = new ContentValues();
+
+       // values.put(TripEntry.COLUMN_NAME_TITLE, trip.getTitle());
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor =
+                db.query(TripEntry.TABLE_NAME, // a. table
+                        new String[] {TripEntry.COLUMN_NAME_ENTRY_ID,TripEntry.COLUMN_NAME_TITLE,TripEntry.COLUMN_NAME_PATH,TripEntry.COLUMN_NAME_START,TripEntry.COLUMN_NAME_END}, // b. column names
+                        " title = ?", // c. selections
+                        new String[] { title }, // d. selections args
+                        null, // e. group by
+                        null, // f. having
+                        null, // g. order by
+                        null); // h. limit
+
+        // 3. if we got results get the first one
+        if (cursor != null)
+            cursor.moveToFirst();
+        if(cursor.getString(4)==null){
+            return false;
+        }
+            else return true;
+
 
     }
 
