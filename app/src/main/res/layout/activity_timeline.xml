@@ -18,7 +18,7 @@ card_view:cardCornerRadius="4dp">
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:color="@color/black"
-    android:text="@string/info_text"/>
+    android:text="Info textsdushlsjh"/>
 
 </android.support.v7.widget.CardView>
     </LinearLayout>

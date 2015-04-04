@@ -1,5 +1,6 @@
 package com.jgeeks.traveltime;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +13,21 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_splash_screen);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
+        try {
+            Thread.sleep(5000);
+            Intent intent = new Intent(this,TimelineActivity.class);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -31,7 +46,7 @@ public class SplashScreen extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this,SplashScreen.class);
+            Intent intent = new Intent(this,GalleryActivity.class);
             startActivity(intent);
             return true;
         }

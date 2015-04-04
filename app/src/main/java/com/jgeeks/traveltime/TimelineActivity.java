@@ -1,10 +1,10 @@
 package com.jgeeks.traveltime;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 
 
 public class TimelineActivity extends Activity {
@@ -31,7 +31,7 @@ public class TimelineActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this,SplashScreen.class);
+            Intent intent = new Intent(this, GalleryActivity.class);
             startActivity(intent);
             return true;
         }
