@@ -96,7 +96,7 @@ public class TimelineActivity extends Activity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, GalleryActivity.class);
 
-            intent.putExtra("TripName", ti);
+            intent.putExtra("TripName", tripName);
             startActivity(intent);
             return true;
         }
