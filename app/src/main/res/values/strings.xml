@@ -7,4 +7,8 @@
     <string name="next">Text test</string>
     <string name="title_activity_gallery">Gallery</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
+
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="action_new_trip">Start trip</string>
+
 </resources>

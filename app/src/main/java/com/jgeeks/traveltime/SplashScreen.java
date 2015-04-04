@@ -3,55 +3,36 @@ package com.jgeeks.traveltime;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.ImageView;
 
 
 public class SplashScreen extends Activity {
-
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash_screen);
-
+        imageView = (ImageView) findViewById(R.id.splashImage);
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
         try {
-            Thread.sleep(5000);
-            Intent intent = new Intent(this,TimelineActivity.class);
-            startActivity(intent);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_splash_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this,GalleryActivity.class);
+        Intent intent = new Intent(this,TimelineActivity.class);
             startActivity(intent);
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
     }
+
 }
