@@ -66,11 +66,12 @@ public class TimelineActivity extends Activity {
             @Override
             public void onItemClick(View view, int position)
             {
-                Toast.makeText(getApplicationContext(),"On item " + position + " clicked",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"On item " + position + " clicked",Toast.LENGTH_SHORT).show();
                 tripName = l.get(position).getTitle();
                 Intent intent = new Intent(getBaseContext(),GalleryActivity.class);
                 intent.putExtra("TripName", tripName);
                 startActivity(intent);
+                finish();
             }
 
             @Override
@@ -101,6 +102,7 @@ public class TimelineActivity extends Activity {
 
             intent.putExtra("TripName", tripName);
             startActivity(intent);
+            finish();
             return true;
         }
 
@@ -112,41 +114,15 @@ public class TimelineActivity extends Activity {
             if(l!=null){
 
                 //l.add(0,new Trip("vacanta test","pathul meu","nulllable","nullable"));
-                //mRecyclerView.addItemDecoration();
-                //openDialog1();
-                //mAdapter.notifyDataSetChanged();
+
+                mAdapter.notifyDataSetChanged();
             }
 
-
+            finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void openDialog1() {
-
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.timeline_additem);
-        dialog.setTitle("Add a new trip");
-
-
-        // set the custom dialog components - text, image and button
-        TextView text = (TextView) dialog.findViewById(R.id.txtName);
-        text.setText("Android custom dialog example!");
-        //ImageView image = (ImageView) dialog.findViewById(R.id.image);
-       // image.setImageResource(R.drawable.ic_launcher);
-
-       // Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-        // if button is clicked, close the custom dialog
-       /* dialogButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });*/
-
-        dialog.show();
     }
 
     @Override

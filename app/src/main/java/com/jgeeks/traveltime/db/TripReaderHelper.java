@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class TripReaderHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "TravelTime.db";
     private Context context;
 
@@ -44,7 +44,8 @@ public class TripReaderHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        //db.execSQL(SQL_DELETE_ENTRIES);
+        String sql ="drop table if exists "+ TripEntry.TABLE_NAME;
+        db.execSQL(sql);
         onCreate(db);
     }
 
@@ -60,32 +61,27 @@ public class TripReaderHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(TripEntry.COLUMN_NAME_TITLE,trip.getTitle());
-        cv.put(TripEntry.COLUMN_NAME_PATH,trip.getPath());
-
-        if(getTrip(trip.getTitle())==null) {
+        cv.put(TripEntry.COLUMN_NAME_PATH, trip.getPath());
             db.insert(TripEntry.TABLE_NAME, null, cv);
-        }
-        else {
-            //trip is already in db
-            Toast.makeText(context,"Trip is already created.",Toast.LENGTH_SHORT).show();
-        }
+
 
         db.close();
     }
 
     public Trip getTrip(String title){
         Trip t = null;
-        String query = "SELECT * FROM "+ TripEntry.TABLE_NAME + " WHERE " +TripEntry.COLUMN_NAME_TITLE + "=" + title;
+        String query = "SELECT * FROM "+ TripEntry.TABLE_NAME + " WHERE " +TripEntry.COLUMN_NAME_TITLE + " = '" + title+"'";
 
         // 2. get reference to writable DB
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. build query
+
         Cursor cursor =
                 db.query(TripEntry.TABLE_NAME, // a. table
-                        new String[] {TripEntry.COLUMN_NAME_ENTRY_ID,TripEntry.COLUMN_NAME_TITLE,TripEntry.COLUMN_NAME_PATH}, // b. column names
-                        " title = ?", // c. selections
-                        new String[] { title.toString() }, // d. selections args
+                        new String[] {TripEntry.COLUMN_NAME_ENTRY_ID,TripEntry.COLUMN_NAME_TITLE,TripEntry.COLUMN_NAME_PATH,TripEntry.COLUMN_NAME_START,TripEntry.COLUMN_NAME_END}, // b. column names
+                        " title = ", // c. selections
+                        new String[] { title }, // d. selections args
                         null, // e. group by
                         null, // f. having
                         null, // g. order by
@@ -119,7 +115,6 @@ public class TripReaderHelper extends SQLiteOpenHelper {
                 trip.setTitle(cursor.getString(1));
                 trip.setPath(cursor.getString(2));
 
-                // Add book to books
                 list.add(trip);
             } while (cursor.moveToNext());
         }
@@ -214,7 +209,7 @@ public class TripReaderHelper extends SQLiteOpenHelper {
 
         public static final String TABLE_TRIP_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + COLUMN_NAME_ENTRY_ID +
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME_TITLE
-                + " STRING, " + COLUMN_NAME_PATH + " STRING, " + COLUMN_NAME_START + " STRING, " + COLUMN_NAME_END + "STRING );";
+                + " STRING, " + COLUMN_NAME_PATH + " STRING, " + COLUMN_NAME_START + " STRING, " + COLUMN_NAME_END + " STRING );";
 
     }
 }

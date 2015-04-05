@@ -24,7 +24,11 @@ import java.util.ArrayList;
  */
 public class ImageAdapter extends BaseAdapter {
 
-    private static String path = "TravelTime";
+    private static String path = "TravelTime/";
+
+    public void setPath(String ph){
+        path = path + "/"+ph;
+    }
 
     private Context mContext;
     public ImageAdapter(Context c) {
@@ -34,7 +38,10 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return listFile.length;
+        if(listFile!=null) {
+            return listFile.length;
+        }
+        else return 0;
     }
     @Override
     public Object getItem(int position) {
@@ -52,6 +59,7 @@ public class ImageAdapter extends BaseAdapter {
 
     public void getSdcardImages()
     {
+
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), path);
 

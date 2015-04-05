@@ -14,7 +14,10 @@ import android.widget.ImageView;
 import com.jgeeks.traveltime.db.TripReaderHelper;
 import com.jgeeks.traveltime.model.Trip;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class SplashScreen extends Activity {
@@ -35,14 +38,22 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash_screen);
         imageView = (ImageView) findViewById(R.id.splashImage);
 
-        TripReaderHelper db = new TripReaderHelper(this);
-//        db.addTrip(new Trip("Vacanta1", "pathul meu", "", ""));
-  //      db.addTrip(new Trip("Vacanta3", "path ", "", ""));
+        Timer waitTimer = new Timer();
+        waitTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //interstitialCanceled = true;
+                SplashScreen.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // The interstitial didn't load in a reasonable amount of time. Stop waiting for the
+                        // interstitial, and start the application.
+                        startAnotherActivity();
+                    }
+                });
+            }
+        }, 3000);
 
-        //List<Trip> l = db.getAllTrips();
-
-        //Trip t = db.getTrip("Vacanta3");
-          startAnotherActivity();
     }
 
     private void initializeDb(){

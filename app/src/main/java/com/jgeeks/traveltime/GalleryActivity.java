@@ -61,34 +61,36 @@ public class GalleryActivity extends Activity {
         String name = i.getExtras().getString("TripName");
         path += name;
         title = name;
-        createFolder();
+        adapter.setPath(name + "/");
+        adapter.getSdcardImages();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+
         grid=(GridView)findViewById(R.id.grid);
         grid.setAdapter(adapter);
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 Intent i;
                 // Send intent to SingleViewActivity
-                if(adapter.f.get(position).contains("mp4")){
+                if (adapter.f.get(position).contains("mp4")) {
                     String file = "file://" + adapter.f.get(position);
                     Uri video = Uri.parse(file);
                     i = new Intent(Intent.ACTION_VIEW, video);
                     i.setDataAndType(video, "video/mp4");
-                }
-                else{
+                } else {
                     i = new Intent(getApplicationContext(), SingleViewActivity.class);
                     // Pass image index
                     i.putExtra("id", position);
-                    i.putExtra("files",adapter.f);
+                    i.putExtra("files", adapter.f);
                 }
                 startActivity(i);
             }
         });
+        grid=(GridView)findViewById(R.id.grid);
+        grid.setAdapter(adapter);
         grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,8 +104,9 @@ public class GalleryActivity extends Activity {
                         File file = new File(adapter.f.get(pos));
                         boolean deleted = file.delete();
                         adapter.f.remove(pos);
-                        adapter.notifyDataSetChanged();
                         adapter.getSdcardImages();
+
+                        adapter.notifyDataSetChanged();
                         dialog.dismiss();
                     }
 
@@ -122,10 +125,7 @@ public class GalleryActivity extends Activity {
                 return true;
             }
         });
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -225,6 +225,14 @@ public class GalleryActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,TimelineActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 }
